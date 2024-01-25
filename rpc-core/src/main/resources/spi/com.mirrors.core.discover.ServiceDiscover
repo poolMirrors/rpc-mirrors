@@ -1,0 +1,2 @@
+zookeeper=com.mirrors.core.discover.zookeeper.ZooKeeperServiceDiscover
+nacos=com.mirrors.core.discover.nacos.NacosServiceDiscover

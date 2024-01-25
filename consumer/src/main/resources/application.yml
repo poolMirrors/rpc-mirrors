@@ -1,0 +1,16 @@
+server:
+  port: 8881
+rpc:
+  client:
+    load-balance: random
+    serialization: hessian
+    communicate: netty
+    registry: zookeeper
+    # 修改注册中心，记得改端口
+    registry-ip-and-port: 192.168.101.130:2181
+    timeout: 5000
+
+# 设置控制台日志显示级别
+logging:
+  level:
+    com.mirrors: info
