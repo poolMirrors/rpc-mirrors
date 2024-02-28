@@ -18,7 +18,7 @@ public class RpcMessage {
     private RpcMessageHeader rpcMessageHeader;
 
     /**
-     * 消息体
+     * 消息体，取值可以为 com.mirrors.core.dto 下的实体类
      */
     private Object rpcMessageBody;
 }

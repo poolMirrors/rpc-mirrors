@@ -49,7 +49,6 @@ public class NettyRpcResponseHandler extends SimpleChannelInboundHandler<RpcMess
                 // rpc返回请求
                 int sequenceId = rpcMessage.getRpcMessageHeader().getSequenceId();
                 // 拿到 还未处理的 promise 对象【取出promise，设置返回信息】
-                // 拿到 还未处理的 promise 对象【取出promise，设置返回信息】
                 Promise<RpcMessage> promise = UNPROCESSED_RESPONSE.remove(sequenceId);
                 if (promise != null) {
                     // 强转RpcResponse信息

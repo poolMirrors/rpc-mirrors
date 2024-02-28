@@ -16,10 +16,15 @@ import java.lang.annotation.Annotation;
 public class RpcClassPathBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
 
     /**
-     * 必须继承了Annotation的注解类型
+     * Class类型，必须继承了Annotation的注解类型
      */
     private Class<? extends Annotation> annotationType;
 
+    /**
+     * 默认无参构造
+     *
+     * @param registry
+     */
     public RpcClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
         super(registry);
         // 过滤指定的注解类型（过滤器）
@@ -31,7 +36,7 @@ public class RpcClassPathBeanDefinitionScanner extends ClassPathBeanDefinitionSc
     }
 
     /**
-     * 自定义构造函数
+     * 自定义构造函数；在RpcBeanDefinitionRegistry中传入RpcService.class
      *
      * @param registry
      * @param annotationType
@@ -41,12 +46,18 @@ public class RpcClassPathBeanDefinitionScanner extends ClassPathBeanDefinitionSc
         this.annotationType = annotationType;
         // 过滤指定的注解类型（过滤器）
         if (annotationType != null) {
-            this.addIncludeFilter(new AnnotationTypeFilter(annotationType));
+            this.addIncludeFilter(new AnnotationTypeFilter(annotationType)); // 添加该注解的过滤器
         } else {
             this.addIncludeFilter(((metadataReader, metadataReaderFactory) -> true));
         }
     }
 
+    /**
+     * 在 RpcBeanDefinitionRegistry 中被调用
+     *
+     * @param basePackages
+     * @return
+     */
     @Override
     public int scan(String... basePackages) {
         return super.scan(basePackages);

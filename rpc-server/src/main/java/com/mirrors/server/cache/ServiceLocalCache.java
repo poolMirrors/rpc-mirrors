@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 服务本地缓存，将服务实体类缓存在本地
+ * 服务本地缓存，将服务实体类bean缓存在本地
  *
  * @author mirrors
  * @version 1.0
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class ServiceLocalCache {
     /**
-     * 服务本地缓存
+     * 服务本地缓存<服务名, 对应的bean>
      */
     private static final Map<String, Object> serviceLocalCacheMap = new ConcurrentHashMap<>();
 

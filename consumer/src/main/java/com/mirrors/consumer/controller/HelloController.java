@@ -23,7 +23,10 @@ public class HelloController {
 
     @RequestMapping("/hello/{name}")
     public String hello(@PathVariable("name") String name) {
-        return helloService.sayHello(name);
+        String s = helloService.sayHello(name);
+        // todo: 解除注释，添加断点方便debug
+        //System.out.println("last");
+        return s;
     }
 
     @RequestMapping("/hello/test/{count}")

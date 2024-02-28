@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 加载 被SPI注解的接口 的所有扩展类
+ * 加载 被SPI注解的接口 的所有扩展类；
+ * todo: 接口扩展类的加载？
  *
  * @author mirrors
  * @version 1.0
  * @date 2023/12/13 9:24
- * todo: 接口扩展类的加载
  */
 @Slf4j
 public class ExtensionLoader<T> {

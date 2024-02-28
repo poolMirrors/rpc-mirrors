@@ -37,10 +37,10 @@ public class HttpRpcRequestHandler {
      * @param response
      */
     public void handle(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            // 拿到 request和response 的输入输出流
-            ObjectInputStream inputStream = new ObjectInputStream(request.getInputStream());
-            ObjectOutputStream outputStream = new ObjectOutputStream(response.getOutputStream());
+        // 拿到 request和response 的输入输出流
+        try (ObjectInputStream inputStream = new ObjectInputStream(request.getInputStream());
+             ObjectOutputStream outputStream = new ObjectOutputStream(response.getOutputStream())) {
+
             // 输入流读取客户端请求，不需要编解码和自定义信息协议
             RpcRequest rpcRequest = (RpcRequest) inputStream.readObject();
             log.debug("The http server received message is {}.", rpcRequest);

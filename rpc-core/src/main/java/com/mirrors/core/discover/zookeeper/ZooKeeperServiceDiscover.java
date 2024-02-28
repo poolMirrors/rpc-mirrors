@@ -42,7 +42,7 @@ public class ZooKeeperServiceDiscover implements ServiceDiscover {
     private static final int CONNECT_TIMEOUT = 15 * 1000;
 
     /**
-     * 初始sleep时间
+     * sleep基础时间
      */
     private static final int BASE_SLEEP_TIME = 3 * 1000;
 
@@ -67,12 +67,12 @@ public class ZooKeeperServiceDiscover implements ServiceDiscover {
     private CuratorFramework client;
 
     /**
-     * 服务发现
+     * 服务发现（org.apache.curator.x.discovery自带）
      */
     private ServiceDiscovery<ServiceInfo> serviceDiscovery;
 
     /**
-     * ServiceCache：将 【服务】 数据缓存至本地，并监听服务变化，实时更新缓存
+     * ServiceCache：将 【服务】 数据缓存至本地，并监听服务变化，实时更新缓存；
      * 服务缓存对象，从zookeeper获取列表缓存，构建本地服务缓存
      */
     private final Map<String, ServiceCache<ServiceInfo>> serviceCacheMap = new ConcurrentHashMap<>();
@@ -151,13 +151,14 @@ public class ZooKeeperServiceDiscover implements ServiceDiscover {
                 public void cacheChanged() {
                     log.info("The service [{}] map changed. The current number of service instances is {}.", serviceName, serviceCache.getInstances().size());
                     // 更新到本地缓存列表
-                    List<ServiceInfo> serviceInfos = serviceCache.getInstances().stream()
+                    List<ServiceInfo> serviceInfos = serviceCache.getInstances()
+                            .stream()
                             .map(ServiceInstance::getPayload)
                             .collect(Collectors.toList());
                     serviceListMap.put(serviceName, serviceInfos);
                 }
 
-                // 连接状态改变时
+                // 2.连接状态改变时
                 @Override
                 public void stateChanged(CuratorFramework curatorFramework, ConnectionState connectionState) {
                     log.info("The client {} connection status has changed. The current status is: {}.", client, connectionState);
@@ -184,7 +185,7 @@ public class ZooKeeperServiceDiscover implements ServiceDiscover {
      */
     @Override
     public void disconnect() throws Exception {
-        // 逐个关闭服务缓存对象
+        // 逐个关闭本地服务缓存对象（关闭监听更新）
         for (ServiceCache<ServiceInfo> serviceCache : serviceCacheMap.values()) {
             if (serviceCache != null) {
                 serviceCache.close();

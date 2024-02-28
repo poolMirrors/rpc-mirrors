@@ -29,7 +29,7 @@ public class HessianSerializer implements Serializer {
         try {
             // 保存到 ByteArrayOutputStream
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            // 利用 HessianSerializerOutput 写入 ByteArrayOutputStream
+            // 利用 HessianSerializerOutput 将data写入 ByteArrayOutputStream
             HessianSerializerOutput hessianSerializerOutput = new HessianSerializerOutput(byteArrayOutputStream);
             hessianSerializerOutput.writeObject(data);
             // 注意要 flush 刷新

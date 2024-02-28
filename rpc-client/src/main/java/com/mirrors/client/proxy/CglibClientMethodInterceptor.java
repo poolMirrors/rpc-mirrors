@@ -10,7 +10,7 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * 基于 Cglib 动态代理
+ * 基于 Cglib 动态代理；implements MethodInterceptor
  *
  * @author mirrors
  * @version 1.0

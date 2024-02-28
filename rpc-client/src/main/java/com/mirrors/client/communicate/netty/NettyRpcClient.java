@@ -51,14 +51,17 @@ public class NettyRpcClient implements RpcClient {
         // 事件循环对象组，每一个事件循环对象对应一个线程（维护一个 Selector），用来处理 channel 上的 io 事件
         NioEventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         // 配置启动类
-        bootstrap.group(eventLoopGroup)
+        bootstrap
+                .group(eventLoopGroup)
                 .channel(NioSocketChannel.class)
+                // todo: 最后改为5000，修改为500000方便debug
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         // 超过 15s 内如果没有向服务器写数据，触发 写空闲
+                        // todo: 写空闲被注释，方便debug
                         pipeline.addLast(new IdleStateHandler(0, 15, 0, TimeUnit.SECONDS));
                         // 添加 粘包拆包 解码器
                         pipeline.addLast(new RpcFrameDecoder());
@@ -81,7 +84,7 @@ public class NettyRpcClient implements RpcClient {
         try {
             // 创建 接受响应结果的 promise
             Promise<RpcMessage> promise;
-            // 获取连接的channel对象
+            // 获取连接的channel对象 =》
             Channel channel = getChannel(new InetSocketAddress(requestMetadata.getServerIp(), requestMetadata.getServerPort()));
             if (channel.isActive()) {
                 //（1）连接成功，使用 promise 接受结果（指定 执行完成通知的线程）
@@ -141,7 +144,7 @@ public class NettyRpcClient implements RpcClient {
     public Channel getChannel(InetSocketAddress socketAddress) {
         Channel channel = channelCache.get(socketAddress);
         if (channel == null) {
-            // 如果没有找到连接的channel对象，说明还没进行连接；先进行连接
+            // 如果没有找到连接的channel对象，说明还没进行连接；先进行连接 =》
             channel = connect(socketAddress);
             // 连接成功后，保存连接的channel对象
             channelCache.set(socketAddress, channel);
@@ -163,6 +166,7 @@ public class NettyRpcClient implements RpcClient {
             bootstrap.connect(socketAddress).addListener((ChannelFutureListener) future -> {
                 if (future.isSuccess()) {
                     log.debug("the client successfully connected to server [{}]", socketAddress.toString());
+                    // 传入结果future.channel()，表明已经执行完
                     completableFuture.complete(future.channel());
                 } else {
                     throw new RuntimeException(String.format("the client failed to connect to [%s].", socketAddress.toString()));

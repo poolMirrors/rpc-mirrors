@@ -13,7 +13,7 @@ import com.mirrors.core.dto.ServiceInfo;
 import java.lang.reflect.Method;
 
 /**
- * 远程调用的工具类
+ * 远程调用的工具类，由客户端属性的动态代理进行调用
  *
  * @author mirrors
  * @version 1.0

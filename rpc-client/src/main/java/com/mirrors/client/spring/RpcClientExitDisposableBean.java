@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 
 /**
- * 实现DisposableBean接口，在客户端推出后，释放资源
+ * 实现DisposableBean接口，在客户端退出后，释放资源
  *
  * @author mirrors
  * @version 1.0

@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NacosServiceRegistry implements ServiceRegistry {
 
     /**
-     * nacos 命名服务
+     * Nacos 命名服务，连接Nacos进行操作
      */
     private NamingService namingService;
 

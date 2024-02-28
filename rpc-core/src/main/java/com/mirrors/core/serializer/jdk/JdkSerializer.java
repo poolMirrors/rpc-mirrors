@@ -23,9 +23,9 @@ public class JdkSerializer implements Serializer {
     @Override
     public <T> byte[] serialize(T data) {
         try {
-            // 保存data数据
+            // 初始化ByteArrayOutputStream
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            // 对象的序列化流，把对象转成字节数据的输出到文件中（或ByteArrayOutputStream）保存
+            // 对象的序列化流，把对象转成字节数据的输出到ByteArrayOutputStream保存
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
             // 将 data 写入ByteArrayOutputStream
             objectOutputStream.writeObject(data);

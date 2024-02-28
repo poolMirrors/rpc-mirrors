@@ -45,7 +45,7 @@ public class RpcBeanDefinitionRegistry implements ImportBeanDefinitionRegistrar,
         AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(annotationMetadata.getAnnotationAttributes(RpcComponentScan.class.getName()));
         String[] basePackages = {};
         if (annotationAttributes != null) {
-            basePackages = annotationAttributes.getStringArray("basePackages");
+            basePackages = annotationAttributes.getStringArray("basePackages"); // 拿到注解的属性值
         }
         // 如果没有指定包名，设置默认包路径
         if (basePackages.length == 0) {

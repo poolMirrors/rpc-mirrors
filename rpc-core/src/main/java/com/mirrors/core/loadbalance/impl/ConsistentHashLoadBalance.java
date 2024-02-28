@@ -54,7 +54,8 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
     }
 
     /**
-     * 实现一致性哈希的内部类
+     * 实现一致性哈希的内部类；
+     * 一个服务，对应多个<Long, ServiceInfo>，Long不同，ServiceInfo相同
      */
     private static final class ConsistentHashSelector {
 
@@ -70,6 +71,9 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
         private final int identityHashCode;
 
         /**
+         * 构造函数，先对节点进行一致性哈希，记录下来；
+         * 一个服务共有virtualNum个节点 = virtualNum/4个不同的digest + 每个digest有4个hash
+         *
          * @param serviceInfos
          * @param virtualNum
          * @param identityHashCode
@@ -82,7 +86,7 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
                 String ip = serviceInfo.getIp();
                 // virtualNum 要除4的原因是下面要进行 4次hash运算
                 for (int i = 0; i < virtualNum / 4; i++) {
-                    // 对 address + i 进行 md5 运算，得到一个长度为16的字节数组
+                    // 对 ip + i 进行 md5 运算，得到一个长度为16的字节数组
                     byte[] digest = md5(ip + i);
                     // 对 digest 部分字节进行4次 hash 运算，得到四个不同的 long 型正整数
                     for (int h = 0; h < 4; h++) {
@@ -130,7 +134,13 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
          * @return
          */
         private long hash(byte[] digest, int index) {
-            return (((long) (digest[3 + index * 4] & 0xFF) << 24) | ((long) (digest[2 + index * 4] & 0xFF) << 16) | ((long) (digest[1 + index * 4] & 0xFF) << 8) | (digest[index * 4] & 0xFF)) & 0xFFFFFFFFL;
+            // 十六进制，1个F == 二进制，4个1
+            return (((long) (digest[3 + index * 4] & 0xFF) << 24) | // 25-32位
+                    ((long) (digest[2 + index * 4] & 0xFF) << 16) | // 17-24位
+                    ((long) (digest[1 + index * 4] & 0xFF) << 8) | // 9-16位
+                    (digest[index * 4] & 0xFF)) // 1-8位
+                    // 32个1
+                    & 0xFFFFFFFFL;
         }
 
         /**
@@ -146,7 +156,7 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
             long hash = hash(digest, 0);
             // 在 TreeMap 中查找第一个节点值 >= 当前hash 的服务方
             Map.Entry<Long, ServiceInfo> serviceEntry = virtualServices.ceilingEntry(hash);
-            // 如果 serviceEntry 为空，说明 hash 大于 服务方节点 在圆环上最大的位置，将 TreeMap头节点 赋给serviceEntry（手动成环）
+            // 如果 serviceEntry 为空，说明 hash 大于 服务方节点 在圆环上最大的位置，将 TreeMap第一个节点 赋给serviceEntry（手动成环）
             if (serviceEntry == null) {
                 serviceEntry = virtualServices.firstEntry();
             }

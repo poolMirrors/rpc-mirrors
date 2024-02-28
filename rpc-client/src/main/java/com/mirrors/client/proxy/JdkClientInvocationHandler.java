@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * 基于 JDK 动态代理
+ * 基于 JDK 动态代理；implements InvocationHandler
  *
  * @author mirrors
  * @version 1.0

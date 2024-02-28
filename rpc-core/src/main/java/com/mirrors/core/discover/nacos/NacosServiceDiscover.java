@@ -49,8 +49,8 @@ public class NacosServiceDiscover implements ServiceDiscover {
      */
     public NacosServiceDiscover(String ipAndPort, LoadBalance loadBalance) {
         try {
-            this.loadBalance = loadBalance;
             namingService = NamingFactory.createNamingService(ipAndPort);
+            this.loadBalance = loadBalance;
         } catch (NacosException e) {
             log.error("nacos connect fail", e);
         }
@@ -99,11 +99,11 @@ public class NacosServiceDiscover implements ServiceDiscover {
                 NamingEvent namingEvent = (NamingEvent) event;
                 log.info("The service [{}] map changed. The current number of service instances is {}.", serviceName, namingEvent.getInstances().size());
                 // 更新本地服务列表缓存
-                List<ServiceInfo> serviceInfos1 = namingEvent.getInstances()
+                List<ServiceInfo> newServiceInfos = namingEvent.getInstances()
                         .stream()
                         .map(instance -> ServiceUtil.toServiceInfo(instance.getMetadata()))
                         .collect(Collectors.toList());
-                serviceMap.put(namingEvent.getServiceName(), serviceInfos1);
+                serviceMap.put(namingEvent.getServiceName(), newServiceInfos);
             });
         }
         // 返回服务列表

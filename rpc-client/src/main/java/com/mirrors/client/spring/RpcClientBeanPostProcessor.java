@@ -44,7 +44,7 @@ public class RpcClientBeanPostProcessor implements BeanPostProcessor {
         Field[] fields = bean.getClass().getDeclaredFields();
         // 遍历所有属性
         for (Field field : fields) {
-            // 判断是否被 @RpcReference 标注
+            // 判断当前属性是否被 @RpcReference 标注
             if (field.isAnnotationPresent(RpcReference.class)) {
                 // 获取注解
                 RpcReference rpcReferenceAnnotation = field.getAnnotation(RpcReference.class);
@@ -61,7 +61,7 @@ public class RpcClientBeanPostProcessor implements BeanPostProcessor {
                     Object proxy = clientProxyFactory.getProxy(clazz, rpcReferenceAnnotation.version());
                     // 关闭安全检测
                     field.setAccessible(true);
-                    // 设置 bean属性 为代理对象！
+                    // 设置 bean 为代理对象！
                     field.set(bean, proxy);
 
                 } catch (Exception e) {

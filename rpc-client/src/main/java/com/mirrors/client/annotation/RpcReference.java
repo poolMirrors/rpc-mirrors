@@ -3,7 +3,7 @@ package com.mirrors.client.annotation;
 import java.lang.annotation.*;
 
 /**
- * 自动注入对应的实现类
+ * 服务注入注解，被标注的属性将自动注入服务的实现类（基于动态代理实现）
  *
  * @author mirrors
  * @version 1.0

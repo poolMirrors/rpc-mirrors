@@ -60,6 +60,7 @@ public class NettyRpcRequestHandler extends SimpleChannelInboundHandler {
         threadPool.submit(() -> {
             try {
                 RpcMessage response = new RpcMessage();
+                // 获取消息头
                 RpcMessageHeader header = request.getRpcMessageHeader();
                 MessageType messageType = MessageType.getByType(header.getMessageType());
                 log.debug("The message received by the server is: {}", request.getRpcMessageBody());
@@ -95,7 +96,7 @@ public class NettyRpcRequestHandler extends SimpleChannelInboundHandler {
                 log.debug("response: {}.", response);
                 // 传递下一个处理器，如果写响应失败，将通道关闭
                 channelHandlerContext.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
-                
+
             } finally {
                 // 释放资源
                 ReferenceCountUtil.release(o);

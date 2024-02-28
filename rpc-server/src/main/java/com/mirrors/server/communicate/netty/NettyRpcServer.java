@@ -56,6 +56,7 @@ public class NettyRpcServer implements RpcServer {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             // 超过 30s 内如果没有从客户端读数据，触发 读空闲
+                            // todo: 读空闲被注释，方便debug
                             pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS));
                             // 添加 粘包拆包 解码器
                             pipeline.addLast(new RpcFrameDecoder());

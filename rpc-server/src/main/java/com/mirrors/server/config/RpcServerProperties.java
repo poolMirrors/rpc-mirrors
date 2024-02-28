@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
  * @date 2023/12/13 20:57
  */
 @Data
-@ConfigurationProperties(prefix = "rpc.server")
+@ConfigurationProperties(prefix = "rpc.server") // 指定前缀
 public class RpcServerProperties {
     /**
      * 服务提供方的ip

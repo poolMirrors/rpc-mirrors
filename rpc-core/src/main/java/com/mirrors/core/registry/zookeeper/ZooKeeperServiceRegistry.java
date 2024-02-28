@@ -34,7 +34,7 @@ public class ZooKeeperServiceRegistry implements ServiceRegistry {
     private static final int CONNECT_TIMEOUT = 15 * 1000;
 
     /**
-     * 初始sleep时间
+     * sleep基础时间
      */
     private static final int BASE_SLEEP_TIME = 3 * 1000;
 
@@ -54,7 +54,7 @@ public class ZooKeeperServiceRegistry implements ServiceRegistry {
     private CuratorFramework client;
 
     /**
-     * 服务发现
+     * 服务发现（org.apache.curator.x.discovery自带）
      */
     private ServiceDiscovery<ServiceInfo> serviceDiscovery;
 
