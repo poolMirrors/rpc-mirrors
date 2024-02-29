@@ -2,17 +2,17 @@
 
 ## 1.Client端启动
 
-![](../../1-%E5%AE%9E%E7%8E%B0RPC/rpc-mirrors/images/Client%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.png)
+![](images/Client%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.png)
 
 ## 2.Server端启动
 
-![](../../1-%E5%AE%9E%E7%8E%B0RPC/rpc-mirrors/images/Server%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.png)
+![](images/Server%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.png)
 
 ## 3.一次调用过程
 
-![](../../1-%E5%AE%9E%E7%8E%B0RPC/rpc-mirrors/images/%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-Client.png)
+![](images/%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-Client.png)
 
-![](../../1-%E5%AE%9E%E7%8E%B0RPC/rpc-mirrors/images/%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-Server.png)
+![](images/%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-Server.png)
 
 # 2.项目主要实现
 
