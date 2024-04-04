@@ -1,0 +1,3 @@
+random=com.mirrors.core.loadbalance.impl.RandomLoadBalance
+roundRobin=com.mirrors.core.loadbalance.impl.RoundRobinLoadBalance
+consistentHash=com.mirrors.core.loadbalance.impl.ConsistentHashLoadBalance

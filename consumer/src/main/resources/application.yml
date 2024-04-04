@@ -1,0 +1,17 @@
+server:
+  port: 8881
+rpc:
+  client:
+    load-balance: roundRobin
+    serialization: hessian
+    communicate: netty
+    registry: nacos
+    # 修改注册中心，记得改端口
+    registry-ip-and-port: 192.168.101.130:8848
+    # todo: 最后改为5000，修改为500000方便debug
+    timeout: 5000
+
+# 设置控制台日志显示级别
+logging:
+  level:
+    com.mirrors: info

@@ -1,0 +1,5 @@
+protostuff=com.mirrors.core.serializer.protostuff.ProtostuffSerializer
+kryo=com.mirrors.core.serializer.kryo.KryoSerializer
+json=com.mirrors.core.serializer.json.JsonSerializer
+jdk=com.mirrors.core.serializer.jdk.JdkSerializer
+hessian=com.mirrors.core.serializer.hessian.HessianSerializer
